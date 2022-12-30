@@ -3,6 +3,8 @@ import pandas as pd
 import urllib.request
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+
 from bs4 import BeautifulSoup
 
 class ChickenStore():
