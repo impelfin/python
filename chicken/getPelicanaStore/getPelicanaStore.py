@@ -11,7 +11,7 @@ def getData():
     
     for page_idx in count():
         url = base_url + '?page=' + str(page_idx + 1)
-        print( url )
+        # print( url )
         chknStore = ChickenStore(brandName, url)
         soup = chknStore.getSoup()
 
@@ -23,6 +23,7 @@ def getData():
         for mytr in mytbody.findAll('tr'):
             shopExists = True
             mylist = list(mytr.strings)
+            # print(mylist)
 
             imsiphone = mytr.select_one('td:nth-of-type(3)').string
             if imsiphone != None:
@@ -39,6 +40,7 @@ def getData():
                 gungu = imsi[1]
 
             mydata = [brandName, store, sido, gungu, address, phone]
+            print(mydata)
             savedData.append(mydata)
 
         if shopExists == False :
