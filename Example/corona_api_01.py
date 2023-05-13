@@ -6,10 +6,13 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+@app.get('/')
+def healthChek():
+    return "OK"
+
 @app.get('/hello')
 def Hello():
-    str = "Hello World~!!"
-    return str
+    return "Hello World~!!"
 
 @app.get('/getdata')
 def getData():
