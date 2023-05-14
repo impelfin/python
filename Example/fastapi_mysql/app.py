@@ -47,7 +47,7 @@ async def getuser(id=None, name=None):
 
 @app.get("/useradd")
 async def useradd(id=None, name=None, dept=None):
-    if (id or name or dept) is None:
+    if (id and name and dept) is None:
         return "학번, 이름, 학과명을 입력하세요"
     else:
         user = St_info(ST_ID=id, NAME=name, DEPT=dept)
