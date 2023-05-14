@@ -1,7 +1,6 @@
 import requests
 import json
-import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -20,7 +19,7 @@ async def getData():
 
     url = 'http://apis.data.go.kr/1352000/ODMS_COVID_02/callCovid02Api'
 
-    today = datetime.today().strftime("%Y%m%d")
+    today = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
 
     params = '?serviceKey=' + serviceKey
     params += '&pageNo=1'
