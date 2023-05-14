@@ -7,15 +7,15 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get('/')
-def healthChek():
+async def healthChek():
     return "OK"
 
 @app.get('/hello')
-def Hello():
+async def Hello():
     return "Hello World~!!"
 
 @app.get('/getdata')
-def getData(today=None):
+async def getData(today=None):
     if today is None:
         msg = "today 날짜 값이 입력되지 않았습니다."
         return msg

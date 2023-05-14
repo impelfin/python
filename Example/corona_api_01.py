@@ -7,15 +7,15 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get('/')
-def healthChek():
+async def healthChek():
     return "OK"
 
 @app.get('/hello')
-def Hello():
+async def Hello():
     return "Hello World~!!"
 
 @app.get('/getdata')
-def getData():
+async def getData():
     serviceKey = 'B%2FNiJnYmkZV1%2FK7ulvZI4MoSXvCTDfNAd0Snw%2Bk6g4%2BbMk1LoGVhd75DJahjv4K35Cr9jh9RX0j%2BM89grKBYsw%3D%3D'
 
     url = 'http://apis.data.go.kr/1352000/ODMS_COVID_02/callCovid02Api'

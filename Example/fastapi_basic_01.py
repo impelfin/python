@@ -3,16 +3,16 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get('/')
-def healthChek():
+async def healthChek():
     return "OK"
 
 @app.get('/hello')
-def Hello():
+async def Hello():
     return "Hello World~!!"
 
 @app.post('/random')
 @app.get('/random')
-def random(max=None):
+async def random(max=None):
     import random
 
     if max is None:
