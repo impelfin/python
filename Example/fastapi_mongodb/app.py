@@ -11,7 +11,6 @@ HOST = 'cluster0.rbwdg3a.mongodb.net'
 USERNAME = 'root'
 PASSWORD = '1234'
 
-
 client = mongo_client.MongoClient(f'mongodb+srv://{USERNAME}:{PASSWORD}@{HOST}')
 print('Connected to Mongodb....')
 # mongodb+srv://root:1234@cluster0.rbwdg3a.mongodb.net/
@@ -20,7 +19,7 @@ mydb = client['test']
 mycol = mydb['testdb']
 
 @app.get('/')
-async def healthChek():
+async def healthCheck():
     return "OK"
 
 @app.get('/getmongo')

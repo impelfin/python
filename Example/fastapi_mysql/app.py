@@ -13,7 +13,6 @@ app = FastAPI()
 db = db_conn()
 session = db.sessionmaker()
 
-
 class Item(BaseModel):
     name : str
     number : int

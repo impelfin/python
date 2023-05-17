@@ -3,7 +3,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get('/')
-async def healthChek():
+async def healthCheck():
     return "OK"
 
 @app.get('/hello')

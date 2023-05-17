@@ -2,14 +2,26 @@ import requests
 import json
 import pandas as pd
 from datetime import datetime, timedelta
+import os.path
 
-serviceKey = 'B%2FNiJnYmkZV1%2FK7ulvZI4MoSXvCTDfNAd0Snw%2Bk6g4%2BbMk1LoGVhd75DJahjv4K35Cr9jh9RX0j%2BM89grKBYsw%3D%3D'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.relpath("./")))
+secret_file = os.path.join(BASE_DIR, '../secret.json')
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        errorMsg = "Set the {} environment variable.".format(setting)
+        return errorMsg
 
 url = 'http://apis.data.go.kr/1352000/ODMS_COVID_02/callCovid02Api'
 
 today = (datetime.today() - timedelta(1)).strftime("%Y%m%d")
 
-params = '?serviceKey='+ serviceKey
+params = '?serviceKey='+ get_secret("data_apiKey")
 params += '&pageNo=1'
 params += '&numOfRows=500'
 params += '&apiType=JSON'
@@ -37,7 +49,7 @@ print(list)
 print('-' * 50)
 
 # list to dict
-items_dict = {key : value for key, value in enumerate(list)}
+items_dict = {key : value for key, value in enumerate(items)}
 print(type(items_dict))
 print(items_dict)
 print('-' * 50)
