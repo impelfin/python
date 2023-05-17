@@ -16,3 +16,4 @@ class St_grade(Base):
     ST_ID = Column(INT, nullable=False, primary_key=True)
     Linux = Column(INT, nullable=False)
     DB = Column(INT, nullable=False)
+    
