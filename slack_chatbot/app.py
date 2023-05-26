@@ -2,11 +2,26 @@ import requests
 import uvicorn
 from fastapi import FastAPI, status
 from fastapi.responses import PlainTextResponse
-import os
+import json
+import os.path
 
 app = FastAPI ( )
 
-myToken = "xoxb-5031215990885-5326230725923-E5atoH2O6kn4uhxFJbwezKTT"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.relpath("./")))
+secret_file = os.path.join(BASE_DIR, '../secret.json')
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        errorMsg = "Set the {} environment variable.".format(setting)
+        return errorMsg
+
+UserToken = get_secret("slack_UserOAuthToken")
+BotToken = get_secret("slack_BotOAuthToken")
 channelName = "#project"
 
 @app.get(path='/')
@@ -24,12 +39,12 @@ def post_message(token, channel, text):
 
 @app.post(path='/sendchat')
 async def sendChat(text:str):
-    post_message(myToken,channelName,text)
+    post_message(UserToken,channelName,text)
     return {f'message:{text}'} 
 
 @app.post(path='/sendhook')
 async def sendHook(text:str):
-    webhookToken = 'https://hooks.slack.com/services/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'
+    webhookToken = get_secret("slack_WebHookToken")
     cmd = "curl -X POST -H " 
     cmd += "'Content-type: application/json' --data "
     cmd += "'{" + '"text"' + ":" + '"' + text + '"' + "}' "
