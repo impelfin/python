@@ -37,9 +37,14 @@ def post_message(token, channel, text):
         data={"channel": channel,"text": text}
     )
 
-@app.post(path='/sendchat')
-async def sendChat(text:str):
+@app.post(path='/sendUserchat')
+async def sendUserChat(text:str):
     post_message(UserToken,channelName,text)
+    return {f'message:{text}'} 
+
+@app.post(path='/sendBotchat')
+async def sendBotChat(text:str):
+    post_message(BotToken,channelName,text)
     return {f'message:{text}'} 
 
 @app.post(path='/sendhook')
