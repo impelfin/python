@@ -1,6 +1,7 @@
 # venv files
 **/.venv
 **/__pycache__/
+**/images
 
 learn/*
 
