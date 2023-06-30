@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body{
+      /*  배경 그림이 화면에 맞게 펼쳐지도록 변경*/
+      margin: 0;
+      padding: 0;
+      background-image: url('images/doodle-4181783.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      font-family: 'MaplestoryOTFBold', sans-serif;
+      overflow-x: hidden;
+      /*overflow-y: hidden;*/
+    }
+
+    header {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      height: 5em;
+      background-color: #FFD700;
+      color: white;
+      padding: 0.1em;
+      margin-bottom: 1em;
+
+    }
+
+    h1{
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+
+    @font-face {
+      font-family: 'MaplestoryOTFBold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    #canvas-container {
+      /*화면 크기가 바뀜에 따라 위치가 화면 크기에 따라 약간씩 움직이도록*/
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto ;
+      width: 100%;
+      max-width: 800px;
+      padding: 20px;
+    }
+
+    #canvas {
+      border: 1px solid black;
+      background-color: white;
+      padding-top: 10px;
+    /*  canvas와 image-container 의 크기가 똑같도록 상대적인 크기로 설정*/
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+
+    #image-container {
+      border: 1px solid black;
+      background-color: white;
+      padding-top: 10px;
+      /*  canvas와 image-container 의 크기가 똑같도록 상대적인 크기로 설정*/
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      margin: 0 auto;
+      display: block;
+      z-index: -1;
+
+    }
+    #image{
+      /*이미지가 없더라도 모양 유지*/
+        min-height: 100%;
+        min-width: 100%;
+        width: auto;
+        height: 100%;
+        margin: 0 auto;
+        display: block;
+        z-index: -1;
+    }
+
+    #image-container {
+        box-sizing: border-box;
+        border: 1px solid black;
+        background-color: white;
+        padding-top: 10px;
+          /*  canvas와 image-container 의 크기가 똑같도록 상대적인 크기로 설정*/
+        width: 50%;
+        height: 20rem;
+        max-width: 100%;
+    }
+
+
+    #action-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    #action-buttons button {
+      margin: 0 5px;
+    }
+
+
+
+    button{
+      float : left;
+      width: 8rem;
+      height: 40px;
+      background-color: #ccc;
+      border-radius : 20px;
+      box-shadow : 3px 3px 3px rgb(87, 87, 87); /*오른쪽 3픽셀, 아래쪽 3픽셀 번짐효과. 3픽셀 그림자.*/
+      transition-duration: 0.3s;
+      color: white;
+      border: 0px;
+    }
+
+    button:active{
+      margin-left: 5px;
+      margin-top : 5px;
+      box-shadow : none;/*클릭했을 때 그림자효과가 사라짐*/
+    }
+
+    button:hover{
+      background-color: #FFD700;
+      color: white;
+    }
+
+    #result{
+      font-size: 2em;
+      font-weight: bold;
+      color: #FFD700;
+    }
+
+    #prediction{
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #FFD700;
+    }
+
+    .result-container{
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      border: 1px solid #FFD700;
+    }
+    .classes{
+        width: 150px;
+        height: 40px;
+        background-color: #ccc;
+        border-radius : 20px;
+        box-shadow : 3px 3px 3px rgb(87, 87, 87); /*오른쪽 3픽셀, 아래쪽 3픽셀 번짐효과. 3픽셀 그림자.*/
+        transition-duration: 0.3s;
+        color: white;
+        border: 0px;
+        margin-left: 10px;
+        margin-top: 10px;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: bold;
+    /*  가로로 정렬한다*/
+        float : left;
+
+    }
+
+    .classes:active{
+      margin-left: 5px;
+      margin-top : 5px;
+      box-shadow : none;/*클릭했을 때 그림자효과가 사라짐*/
+    }
+
+    .classes:hover{
+      background-color: #FFD700;
+      color: white;
+    }
+
+
+  /*  모바일 환경에서 image-container cavas cavas-container css 설정*/
+    @media screen and (max-width: 800px) {
+      body {
+        overflow: auto;
+      }
+        #canvas-container {
+            flex-direction: column;
+        }
+        #canvas {
+            margin: 0;
+            height: 80%;
+            width: 100%;
+            padding-bottom: 0;
+        }
+        #image-container {
+            margin-top: 20px;
+        }
+    /*    image 가 image container안에만 있도록 설정*/
+        #image-container {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0 auto;
+            display: block;
+            z-index: -1;
+        }
+        #image{
+            /*이미지가 없더라도 모양 유지*/
+            min-height: 100%;
+            min-width: 100%;
+            width: 100%;
+            height: 16rem;
+            margin: 0 auto;
+            display: block;
+            z-index: -1;
+        }
+        #action-buttons {
+            flex-direction: row;
+        }
+        #action-buttons button {
+            margin: 5px 0;
+        }
+    /*    header 크기 작게 조정*/
+        header {
+          font-size: 0.5em;
+          height: 0px;
+          margin: 0;
+          padding: 0;
+          background-color: transparent;
+          color: black;
+        }
+        button{
+          float : left;
+          width: 3rem;
+          height: 15px;
+          background-color: #ccc;
+          border-radius : 20px;
+          box-shadow : 3px 3px 3px rgb(87, 87, 87); /*오른쪽 3픽셀, 아래쪽 3픽셀 번짐효과. 3픽셀 그림자.*/
+          transition-duration: 0.3s;
+          color: white;
+          border: 0;
+        }
+
+    }
+
+
+  </style>
+
+  <meta charset="utf-8" name="viewport" content="width=device-width">
+</head>
+<body>
+<header>
+  <h1>FTF조</h1>
+</header>
+
+<div id="canvas-container">
+  <canvas id="canvas" width="400" height="310"></canvas>
+  <!--    image-container 에 이미지가 없더라도 외곽선이 보이도록 설정-->
+  <div id="image-container" style="background-color: white">
+<!--    이미지가 없다면 xbox.jpg를 띄우도록 설정-->
+    <img id="image" src="" alt="" >
+  </div>
+</div>
+<div id="action-buttons">
+  <button onclick="clearCanvas('real-clear')" style="background-color: #89e73c;">그림 전체 지우기</button>
+  <button onclick="undo()" style="background-color: #d33eed;">이전으로 돌아가기</button>
+</div>
+<div class="result-container">
+  <div>
+    <!--  가능한 종류를 한글로 나열한다-->
+    <!--    버튼이 아니라 그냥 텍스트만 나열-->
+    <span >분류 가능: </span>
+    <span >벌 ,</span>
+    <span >양초 ,</span>
+    <span >자동차 ,</span>
+    <span >시계 ,</span>
+    <span >물고기 ,</span>
+    <span >기타 ,</span>
+    <span >문어 ,</span>
+    <span >눈사람 ,</span>
+    <span >나무 ,</span>
+    <span >우산 ,</span>
+  </div>
+  <span>분류 결과: </span>
+  <div id="result"></div>
+<!--  줄바꿈-->
+  <br>
+  <div id="prediction"></div>
+  <div id="input_image"></div>
+
+</div>
+<!--<script type="text/javascript" src="tensorflow.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.9.0/dist/tf.min.js"></script>
+<script src="testing.js"></script>
+</body>
+</html>
