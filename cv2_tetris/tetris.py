@@ -78,6 +78,7 @@ num_5 = (
     (3, 4, 1, 8, 2),
     (1, 2, 0, 8, 1),
     (2, 5, 3, 8, 3))
+
 num_6 = (
     (2, 5, 0, 16, 1),
     (5, 1, 2, 16, 1),
@@ -91,6 +92,7 @@ num_6 = (
     (3, 4, 1, 8, 0),
     (1, 2, 0, 8, 1),
     (2, 5, 3, 8, 3))
+
 num_7 = (
     (0, 0, 4, 16, 0),
     (1, 2, 4, 14, 0),
@@ -137,10 +139,10 @@ myWHITE = (255, 255, 255)
 myYELLOW = (0, 255, 255)
 myCYAN = (255, 255, 0)
 myMAGENTA = (255, 0, 255)
-myORANGE = (0, 96, 255)
+myORANGE = (255, 165, 0)
 myBLACK = (45, 45, 45)
 
-myCOLORS = (myRED, myGREEN, myBLUE, myWHITE, myYELLOW, myCYAN, myMAGENTA, myBLACK)
+myCOLORS = (myRED, myGREEN, myBLUE, myWHITE, myYELLOW, myCYAN, myMAGENTA, myORANGE)
 mynums = (num_0, num_1, num_2, num_3, num_4, num_5, num_6, num_7, num_8, num_9)
 scale = 20
 x_shift = 2
