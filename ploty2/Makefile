@@ -6,5 +6,4 @@ freeze:
 	pip freeze > requirements.txt
 run : 
 	python app.py
-toggle : 
-	python app_toggle.py
+	
