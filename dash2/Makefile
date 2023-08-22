@@ -6,5 +6,7 @@ freeze:
 	pip freeze > requirements.txt
 run : 
 	python app.py
-toggle : 
-	python toggle.py
+cross : 
+	python cross.py
+mart : 
+	python mart.py
