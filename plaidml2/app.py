@@ -177,7 +177,7 @@ modelo.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accurac
 es = EarlyStopping(patience=10, restore_best_weights=True)
 
 # Train model
-history = modelo.fit(X_train2_resized, y_train2, epochs=100, batch_size=10, validation_split=0.2, callbacks=[es])
+history = modelo.fit(X_train2_resized, y_train2, epochs=5, batch_size=100, validation_split=0.2, callbacks=[es])
 
 # Make predictions
 preds = modelo.predict(X_test_resized, verbose=0)
