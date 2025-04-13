@@ -2,8 +2,9 @@
 **/.venv
 **/__pycache__/
 **/images
-
-learn/*
+../.ruff_cache
 
 ./secret.json
 .idea
+
+learn/*
